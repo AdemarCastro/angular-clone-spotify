@@ -1,0 +1,9 @@
+import { Routes } from "@angular/router";
+
+export const AppRotas: Routes = [ // Array
+    { // Objeto
+        path: 'login',
+        //component: Ao seu programa executar pela primeira vez o programa irá fazer o download de todo o componente de login e tudo que for necessário para executá-lo. O motivo disto não ser recomendado é que, ao usá-lo de forma indevida, pode causar atraso no carregamento do site para o usuário.
+        loadChildren: () => import('./pages/login/login.module') // O uso do loadChildren nos permite utilizar a técnica de Lazy Loading, que é uma técnica usada em aplicações Angular para melhorar o desempenho e a eficiência do carregamento de páginas. Em vez de carregar todos os módulos e componentes de uma só vez, o lazy loading nos permite carregar apenas o necessário para a página atual. Dessa forma, o carregamento das páginas será por demanda, o que irá tornar a aplicação mais leve e dinâmica.
+    }
+]
