@@ -1,10 +1,16 @@
 import { Routes } from "@angular/router";
+import { AtenticadoGuard } from "./guards/atenticado.guard";
 
 export const AppRotas: Routes = [ // Array
     {
         path: '',
-        redirectTo: 'login',
+        redirectTo: 'player',
         pathMatch: 'full' // Assim sempre vou ser redirecionado para tela de login inicialmente
+    },
+    {
+        path: 'player',
+        loadChildren: () => import('./pages/player/player.module').then(m => m.PlayerModule),
+        canLoad: [AtenticadoGuard]
     },
     { // Objeto
         path: 'login',
