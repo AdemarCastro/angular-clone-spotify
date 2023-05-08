@@ -13,3 +13,12 @@ html, body {
     font-family: 'Montserrat', sans-serif;
     box-sizing: border-box; // Agora o tamanho dos elementos são calculados levando em consideração o preenchimento e a borda. Essa propriedade é útil porque permite controlar mais facilmente o layout de um elemento e evitar problemas de dimensionamento imprevisíveis. Por exemplo, se você definir a largura de uma caixa com width: 100%, e a caixa tiver uma borda e preenchimento, o tamanho total da caixa pode acabar excedendo a largura da tela, criando uma barra de rolagem horizontal. Com box-sizing: border-box, você pode garantir que a largura total da caixa permaneça dentro da largura da tela, incluindo as dimensões da borda e do preenchimento.
 }
+
+.flex { // Assim não irei precisar sempre declarar que uma div é um display flex
+    display: flex;
+
+    &-center { // Isso aqui é para padronizar os itens para serem centralizados em uma página
+        justify-content: center;
+        align-items: center;
+    }
+}

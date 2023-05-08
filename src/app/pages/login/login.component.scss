@@ -1,0 +1,31 @@
+@import 'variaveis.scss';
+
+:host { // Ao invés de usar uma div fora é possível utilizar o host
+    background-color: #222;
+    position: absolute;
+    width: 100vw; // Preenche toda a tela horizontalmente
+    height: 100vh; // Preenche toda a tela verticalmente
+    flex-direction: column; // Os objetos ficam empilhados
+    
+    .base { // O Angular entende que se trata da base do Host
+        width: 100%; // Preenche horizontalmente com relação ao componente PAI que é o HOST
+        height: 100%; // Preenche verticalmente com relação ao componente PAI que é o HOST
+        flex-direction: column;
+        justify-content: space-around; // Distribui os itens de forma que o espaço entre eles é igual
+
+        img {
+            width: 40%;
+        }
+
+        button {
+            font-size: 1.5rem; // O motivo de se usar REM é que ele respeita o tamanho da fonte setada pelo usuário no seu navegador, assim os 1.5 representa 150% do tamanho original da fonte do navegador do usuário
+            min-width: 200px; // Seta a largura minima do botão
+            padding: 20px; // Espaço dentro do botão
+            border-radius: 500px; // Deixa o botão com as bordas rendondas
+            background-color: $cor-primaria; // Seta a cor de fundo do botão
+            color: white; // Seta a cor da fonte do botão
+            border: 0; // Retira a borda padrão do html
+            cursor: pointer;
+        }
+    }
+}

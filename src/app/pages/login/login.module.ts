@@ -1,13 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login.component';
+import { RouterModule } from '@angular/router';
+import { LoginRotas } from './login.routes';
 
 @NgModule({
   declarations: [
-    LoginComponent // Todo componente no Angular precisa estar vinculado a algum Modulo
+    LoginComponent, // Todo componente no Angular precisa estar vinculado a algum Modulo
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule.forChild(LoginRotas)
   ]
 })
 export class LoginModule { }

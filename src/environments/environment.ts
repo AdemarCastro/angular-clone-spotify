@@ -2,10 +2,10 @@ export const environment = { // Basicamente as variáveis de ambiente do Angular
     production: false
 };
 
-export const SpotifuConfiguration = {
-    clientId: '35226d67ba96486e858f5e0d2d22c9f5', // Id da minha Aplicação do Spotify
+export const SpotifyConfiguration = {
+    clientId: '5ab58bafe500434fa6de33d2277ab662', // Id da minha Aplicação do Spotify
     authEndpoint: 'https://accounts.spotify.com/authorize', // EndPoint que o Spotify usa para autenticar o usuário
-    redirectUrl: 'http://localhost:4200/login/', // Para onde o usuário será redirecionado após o processo de autenticação ser concluído
+    redirectUrl: 'https://localhost:4200/login/', // Para onde o usuário será redirecionado após o processo de autenticação ser concluído
     scopes: [
         "user-read-currently-playing", // Musica tocando agora
         "user-read-recently-played", // Ler músicas tocadas recentemente
