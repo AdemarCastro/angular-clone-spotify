@@ -3,8 +3,9 @@ import { SpotifyConfiguration } from 'src/environments/environment';
 import { SpotifuConfiguration } from 'src/environments/environment.prod';
 import Spotify from 'spotify-web-api-js';
 import { IUsuario } from '../interfaces/IUsuario';
-import { SpotifyUserParaUsuario } from '../Common/spotifyHelper';
+import { SpotifyPlaylistParaPlaylist, SpotifyUserParaUsuario } from '../Common/spotifyHelper';
 import jwt_decode, {JwtPayload } from 'jwt-decode';
+import { IPlaylist } from '../interfaces/IPlaylist';
 
 @Injectable({
   providedIn: 'root'
@@ -79,6 +80,11 @@ export class SpotifyService {
 
     return diferencaTempo >= tempoExpirado;
   } /* Esse método utiliza a data e hora em que o Token foi armazenado no localStorage para calcular a diferença de tempo. Sendo assim, caso a diferença seja maior ou igual ao tempo de expiração, que corresponde a 1 hora, então ele retornara um True, caso contrario irá retornar False.*/
+
+  async buscarPlaylistUsuario(offset = 0, limit = 50): Promise<IPlaylist[]>{
+    const playlists = await this.spotifyApi.getUserPlaylists(this.usuario.id, { offset, limit });
+    return playlists.items.map(SpotifyPlaylistParaPlaylist)
+  }
 
 }
 

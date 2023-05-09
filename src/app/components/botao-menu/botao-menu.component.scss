@@ -1,8 +1,36 @@
+@import "variaveis.scss";
+
 :host { // O host é como se eu estivesse colocando uma div que cobrisse todo o html e colocasse uma classe Host nele
     display: block;
     width: 100%;
 
     button {
         width: 100%;
+        border: 0;
+        padding: 10px 0px 10px 20px;
+        border-radius: 5px;
+        text-align: left;
+        font-weight: 600;
+        font-size: .8rem;
+        cursor: pointer;
+
+        span {
+            display: inline-block;
+            vertical-align: middle; // Para setar no meio verticalmente
+            width: 150px;
+            white-space: nowrap; // Para impedir que o botão quebre, será apenas uma linha
+            margin-left: 15px; // Separa o icone do botão
+            overflow: hidden; // O que passar do espaço do botão irá ser escondido
+            text-overflow: ellipsis; // O que passar será escondido e será posto um "...". Para a Home, Pesquisar e etc não é tão interessante, mas é válido lembrar que isso é uma componentizaçao e iremos utilizar esse código para fazer os outros botão, inclusive os da playlist, então quando houver uma playlist com um nome extenso essa propriedade virá a calhar.
+            
+        }
+        
+        color: $cor-primaria;
+        background-color: transparent;
+
+        &.selecionado {
+            color: $branco;
+            background-color: $cor-primaria;
+        }
     }
 }

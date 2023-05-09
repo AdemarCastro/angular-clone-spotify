@@ -30,10 +30,37 @@ $m-entre-menus: 10px;
         .menu-container {
             width: 100%;
 
+            &.flex {
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+            }
+
             &.opcoes {
                 min-height: $h-menu-opcoes;
-                flex-direction: column;
                 
+                * {
+                    margin-bottom: $m-entre-menus;
+                }
+            }
+
+            .playlist-titulo {
+                margin: 10px 0px;
+                align-self: flex-start; // Ficar em primeiro
+                font-weight: 700;
+                font-size: .7rem;
+                color: $preto-transparente-30;
+            }
+
+            .playlist-scroll {
+                width: 100%;
+                max-height: 50vh;
+                overflow-y: auto;
+
+                &::-webkit-scrollbar{
+                    display: none;
+                }
+
                 * {
                     margin-bottom: $m-entre-menus;
                 }

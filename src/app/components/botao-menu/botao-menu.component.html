@@ -1,4 +1,13 @@
-<button type="button">
-    <ng-content></ng-content> <!-- Serve para capturar o que está dentro dos botões do componente -->
-    <span>{{descricao}}</span> <!-- Bigode duplo serve para chamar uma variavel do componente -->
+<button type="button" 
+    [class.selecionado]="selecionado"
+    (click)="onClick()" 
+> 
+    <ng-content></ng-content> 
+    <span>{{descricao}}</span> 
 </button>
+
+<!--[class.selecionado]="selecionado == true"; Apenas quando o selecinado for igual a TRUE a classe selecionado será alocada ao botão -->
+
+<!-- <ng-content></ng-content> Serve para capturar o que está dentro dos botões do componente -->
+
+<!-- <span>{{descricao}}</span> Bigode duplo serve para chamar uma variavel do componente -->
