@@ -24,8 +24,8 @@ export class AtenticadoGuard implements CanLoad {
       return this.naoAutenticado();
     }
 
-    return new Promise((res) => {
-      const usuarioCriado = this.spotifyService.inicializarUsuario();
+    return new Promise(async (res) => {
+      const usuarioCriado = await this.spotifyService.inicializarUsuario();
       if (usuarioCriado)
         res(true);
       else
@@ -41,3 +41,12 @@ export class AtenticadoGuard implements CanLoad {
     return false;
   }
 }
+
+/* 
+SOBRE O USO DE ASYNC E AWAIT
+
+O uso do async e do await permite que o código assíncrono seja escrito de forma síncrona e sequencial. Quando uma função assíncrona é chamada e encontra a palavra-chave await, a execução da função é pausada até que a operação assíncrona que está sendo aguardada seja concluída. Isso significa que o código não avança para a próxima linha até que a operação assíncrona seja concluída, tornando a execução do código sequencial, mesmo que haja operações assíncronas acontecendo em segundo plano.
+
+*/
+
+

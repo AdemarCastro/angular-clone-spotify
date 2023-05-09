@@ -4,6 +4,7 @@ import { SpotifuConfiguration } from 'src/environments/environment.prod';
 import Spotify from 'spotify-web-api-js';
 import { IUsuario } from '../interfaces/IUsuario';
 import { SpotifyUserParaUsuario } from '../Common/spotifyHelper';
+import jwt_decode, {JwtPayload } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -23,13 +24,14 @@ export class SpotifyService {
     
     const token = localStorage.getItem('token');
 
-    if(!token)
+    if(!token || this.verificarTokenExpiration()) {
       return false;
-    
+    }
     try {
 
       this.definirAcessToken(token);
       await this.obterSpotifyUsuario();
+      console.log(token);
       return !!this.usuario; // Verifica se o usuario está preenchido
 
     }catch(ex){
@@ -62,8 +64,22 @@ export class SpotifyService {
 
   definirAcessToken(token: string){
     this.spotifyApi.setAccessToken(token);
+    const dataCriacaoToken = new Date().toISOString();
     localStorage.setItem('token', token); // Serve para que não seja necessário refazer o login toda vez que der um refresh na página
+    localStorage.setItem('dataCriacaoToken', dataCriacaoToken);
   }
+
+  verificarTokenExpiration() {
+    const dataCriacaoToken = localStorage.getItem('dataCriacaoToken');
+
+    const tempoExpirado = 60 * 60 * 1000; 
+    const dataAtual = new Date().getTime();
+    const dataCriacaoTokenMs = new Date(dataCriacaoToken).getTime();
+    const diferencaTempo = dataAtual - dataCriacaoTokenMs;
+
+    return diferencaTempo >= tempoExpirado;
+  } /* Esse método utiliza a data e hora em que o Token foi armazenado no localStorage para calcular a diferença de tempo. Sendo assim, caso a diferença seja maior ou igual ao tempo de expiração, que corresponde a 1 hora, então ele retornara um True, caso contrario irá retornar False.*/
+
 }
 
 /* 
