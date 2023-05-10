@@ -4,11 +4,26 @@ table {
     width: 100%;
     text-align: left;
     table-layout: fixed;
-    border-collapse: separate;
+    border-collapse: collapse;
 
     .play {
         color: $cor-primaria;
         font-size: .5rem;
+    }
+
+    .executando {
+        background-color: $branco;
+        padding: 10px;
+        box-shadow: 0px 0px 15px $preto-transparente-30;
+        
+        td {
+            color: $cor-primaria;
+            font-size: 1rem;
+        }
+
+        .play {
+            font-size: .7rem;
+        }
     }
 
     thead th {
@@ -22,7 +37,7 @@ table {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-
+        
         &:nth-child(1) {
             padding-left: 10px;
         }
@@ -35,7 +50,7 @@ table {
                 color: $cor-primaria;
             }
         }
-
+        
         td {
             padding: 10px 20px 10px 0px;
             margin-top: 10px;

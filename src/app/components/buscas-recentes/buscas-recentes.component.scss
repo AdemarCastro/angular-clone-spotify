@@ -1,0 +1,45 @@
+@import 'variaveis.scss';
+
+:host {
+    input {
+        width: 100%;
+        padding: 10px 5px;
+        border-radius: 8px;
+        border-color: $preto-transparente-30;
+        outline: none; // Retira o comportamento de marcar a caixa ao clicar
+        color: $cor-primaria;
+        font-size: 1rem;
+        font-weight: 500;
+
+        &::placeholder {
+            color: $preto-transparente-30;
+            font-size: .85rem;
+        }
+
+        &:focus, &:active {
+            border-color: $cor-primaria;
+            border-width: 2px; // Define a largura da borda
+        }
+    }
+
+    .sugestoes {
+        flex-wrap: wrap; // Ao atingir o limite da classe ele irá cair pra baixo
+
+        span {
+            background-color: $branco;
+            margin-right: 5px;
+            padding: 5px 10px;
+            color: $preto-transparente-70;
+            border: 1px solid $preto-transparente-30;
+            margin-top: 10px;
+            font-size: .9rem;
+            border-radius: 20px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: rgba($cor-primaria, .5);
+                color: $branco;
+            }
+        }
+    }
+}

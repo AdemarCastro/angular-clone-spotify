@@ -1,0 +1,15 @@
+<input 
+type="text"
+[(ngModel)]="campoPesquisa"
+placeholder="Artistas, Musicas, Playlists"
+(keyup.Enter)="buscar()"
+> <!-- ngModel - Tudo que eu escrever na variável ele vai deixar previamente setado e tudo que eu escrever no Input será salvo na variavel -->
+
+<div class="sugestoes flex">
+    <span
+        (click)="definirPesquisa(pesquisa)" 
+        *ngFor="let pesquisa of pesquisasRecentes"
+    >
+    {{ pesquisa }}
+    </span>
+</div>
