@@ -1,0 +1,32 @@
+@import 'variaveis.scss';
+
+:host {
+    .flex {
+        padding: 5px 30px;
+        justify-content: space-between;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+        color: $cor-primaria;
+        border-top: 1px solid $preto-transparente-20;
+    }
+
+    img {
+        flex-grow: 0; // Eu não quero que a imagem cresça
+        width: 40px;
+        height: auto;
+        border-radius: 50%;
+    }
+
+    span {
+        flex-grow: 1;
+        margin: 20px;
+        font-size: .9rem;
+        font-weight: 700;
+    }
+
+    .icone {
+        flex-grow: 0;
+        cursor: pointer;
+    }
+}

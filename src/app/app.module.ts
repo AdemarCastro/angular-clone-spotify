@@ -11,7 +11,7 @@ import { AppRotas } from './app.routes';
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(AppRotas)
+    RouterModule.forRoot(AppRotas) // Rota principal
   ],
   providers: [],
   bootstrap: [AppComponent]

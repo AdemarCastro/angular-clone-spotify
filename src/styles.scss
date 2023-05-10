@@ -22,3 +22,38 @@ html, body {
         align-items: center;
     }
 }
+
+.titulo {
+    color: $cor-primaria;
+    display: block;
+    font-weight: 700;
+
+    &-bg { // Não coloca as propriedades acima dentro, mas com a propriedade extend .titulo é possível introduzir as propriedades de titulo dentro de bg
+        @extend .titulo;
+        font-size: 2.2rem;
+    }
+    
+    &-md {
+        @extend .titulo;
+        font-size: 1.4rem;
+    }
+    
+}
+
+.mt {
+   @for $i from 1 to 10 {
+    &-#{ $i } {
+        margin-top: #{ $i }vh;
+    }
+   } // Irei utilizar um for para interar utilizando o SAS para me permitir criar um MT de 1 até 10 com poucas linhas e de forma mais legivel. Muito legal! Fiz um FOR utilizando CSS.
+}
+
+.p-20 {
+    padding: 20px;
+}
+
+.card {
+    box-shadow: 0px 0px 15px $preto-transparente-03;
+    background-color: $branco;
+    border-radius: 10px;
+}

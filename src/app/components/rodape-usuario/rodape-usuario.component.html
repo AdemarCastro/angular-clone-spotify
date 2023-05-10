@@ -1,0 +1,12 @@
+<div class="flex">
+    <img [src]="usuario.imagemUrl" alt="" srcset="">
+    <!-- Para pegar imagens dinâmica é necessário o Colchetes -->
+    <span>
+        {{ usuario.nome }}
+    </span>
+    <fa-icon 
+        class="icone" 
+        (click)="logout()"
+        [icon]="sairIcone">
+    </fa-icon>
+</div>

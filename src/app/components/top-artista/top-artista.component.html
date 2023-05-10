@@ -1,0 +1,13 @@
+<div class="card p-20">
+    <button class="artista flex">
+        <span class="titulo-bg">
+            {{ topArtista.nome }}
+        </span>
+    </button>
+    
+    <div class="image"
+        [style.background-image]="'url(' + topArtista.imagemUrl 
+        + ')'"    
+    >
+    </div> <!-- Essa div precisa ficar atrás de tudo para servir de background para o card -->
+</div>

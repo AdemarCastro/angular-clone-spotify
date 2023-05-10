@@ -3,8 +3,12 @@
 $h-spotify-logo: 120px;
 $h-menu-opcoes: 150px;
 $m-entre-menus: 10px;
+$h-footer-user: 70px;
+
+$h-desconsiderar: calc($h-spotify-logo + $h-menu-opcoes + $h-footer-user); // Irei somar todos os espaços da div do Painel Esquerdo para realizar um calculo de subtração para que assim o menu de playlists possa preencher todo o espaço de maneira dinâmica na página
 
 :host {
+    min-width: 300px;
     max-width: 300px;
     min-height: 100vh;
     overflow-y: hidden; // O que passar da div na vertical será escondido
@@ -43,6 +47,13 @@ $m-entre-menus: 10px;
                     margin-bottom: $m-entre-menus;
                 }
             }
+            
+            .divisao {
+                border-top: 1px solid $preto-transparente-20;
+                width: 300px;
+                padding: 0;
+                margin: 0;
+            }
 
             .playlist-titulo {
                 margin: 10px 0px;
@@ -54,7 +65,7 @@ $m-entre-menus: 10px;
 
             .playlist-scroll {
                 width: 100%;
-                max-height: 50vh;
+                max-height: calc(95vh - $h-desconsiderar);
                 overflow-y: auto;
 
                 &::-webkit-scrollbar{
@@ -66,5 +77,14 @@ $m-entre-menus: 10px;
                 }
             }
         }
+    }
+
+    .usuario-info {
+        flex-grow: 0; // Ela entende a altura da classe como 
+        display: block;
+        bottom: 0; // Coloca o item embaixo da div pai
+        align-self: flex-end; // Assim ele será o último
+        height: $h-footer-user;
+        width: 100%; // Em relação ao elemento pai
     }
 }

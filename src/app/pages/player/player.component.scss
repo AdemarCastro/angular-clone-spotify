@@ -1,4 +1,9 @@
 :host {
     display: flex; // Para colocar um item do lado do outro
     
+    .rotas-container {
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
 }
