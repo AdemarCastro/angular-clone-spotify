@@ -34,10 +34,12 @@ export class PainelEsquerdoComponent implements OnInit{
     this.router.navigateByUrl('player/home'); // Ao clicar em Home é encaminhado para a rota de Home
   }
 
-  async buscarPlaylists(){
-    this.playlists = await this.spotifyService.buscarPlaylistUsuario();
-    
+  irParaPlaylist(playlistId: string) {
+    this.menuSelecionado = playlistId;
+    this.router.navigateByUrl(`player/lista/playlist/${playlistId}`);
   }
 
-
+  async buscarPlaylists(){
+    this.playlists = await this.spotifyService.buscarPlaylistUsuario();
+  }
 }
