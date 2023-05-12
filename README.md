@@ -1,28 +1,48 @@
-# AngularCloneSpotify
+# UI Spotify com Angular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.7.
+Visual Web
 
-## Development server
+<img src='./src/assets/images/result-final.gif' width="70%">
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+---
 
-## Code scaffolding
+## 🔖Sobre
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+**UI utilizando a API do Spotify com Angular.**
 
-## Build
+- A aplicação permite controlar a execução de músicas.
+- Playlists/Músicas Curtidas do usuário logado.
+- Top artista/Top 5+ músicas.
+- Player sincronizado.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## 💾Instalação
 
-## Running unit tests
+**Instalar dependencias:**
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```shell
+$ npm install
+```
 
-## Running end-to-end tests
+```shell
+$ npm i @angular/cli -g
+```
+**Antes de rodar o projeto:**
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+- Faça login com sua conta do Spotify em http://developer.spotify.com
 
-## Further help
+Crie um App na plataforma e adicione a URI http://localhost:4200/login/ nas configurações.
+Copie a Client ID e insira em environment.ts, linha 6.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
-# meu-novo-projeto
+**Execução:**
+
+```shell
+$ ng serve -o
+```
+
+Projeto baseado neste [Repositório](https://github.com/cristianWilliam/Spotify-Angular).
+
+Créditos ao [Cristian William](https://github.com/cristianWilliam), [Márkys Corrêa](https://github.com/markyscorrea)
+
+---
+
+Desenvolvido por Ademar Castro.
