@@ -2,7 +2,7 @@
 
 Visual Web
 
-<img src='./src/assets/images/result-final.gif' width="70%">
+<img src="src/assets/imagens/result-final.gif" width="70%" alt="Gif mostrando a execução do projeto.">
 
 ---
 
