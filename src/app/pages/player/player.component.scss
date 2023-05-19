@@ -1,5 +1,6 @@
 :host {
     display: flex; // Para colocar um item do lado do outro
+    max-height: 100vh;
     
     .rotas-container {
         display: block;
