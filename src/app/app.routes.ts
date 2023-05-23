@@ -15,11 +15,11 @@ export const AppRotas: Routes = [ // Array
     { // Objeto
         path: 'login',
         
-        loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule) 
+        loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule)
     }
 ];
 
-/* 
+/*
 SOBRE O USO DO CANLOAD
 
 CanLoad serve para impedir que usuários sem autenticação tenham acesso a rotas que não deveriam, além de impedir o carregamento desnecessário de páginas e o redirecionando para outra página.

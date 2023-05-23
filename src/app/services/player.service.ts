@@ -12,13 +12,13 @@ export class PlayerService {
   musicaAtual = new BehaviorSubject<IMusica>(newMusica()); // Subject é basicamente um objeto que você consegue se inscrever nesse objeto e toda alteração que acontece ele comunica para todos os componentes que está conectado. A diferença do Subject para o BehaviorSubject é que o último pode ser inicializado.
   timerId: any = null;
 
-  constructor(private spotifyService: SpotifyService) { 
+  constructor(private spotifyService: SpotifyService) {
     this.obterMusicaAtual();
   }
 
   async obterMusicaAtual() {
     // Limpa o cash ao TimerId ser lido
-    clearTimeout(this.timerId); 
+    clearTimeout(this.timerId);
 
     // Obtenho a música
     const musica = await this.spotifyService.obterMusicaAtual();

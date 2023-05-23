@@ -3,7 +3,8 @@ import { IArtista } from "../interfaces/IArtista";
 import { IMusica } from "../interfaces/IMusica";
 import { IPlaylist } from "../interfaces/IPlaylist";
 import { IUsuario } from "../interfaces/IUsuario";
-import { newMusica, newPlaylist } from "./factories";
+import { newAlbum, newArtista, newMusica, newPlaylist } from "./factories";
+import { IAlbum } from "../interfaces/IAlbum";
 
 export function SpotifyUserParaUsuario(user: SpotifyApi.CurrentUsersProfileResponse): IUsuario{
     return {
@@ -21,6 +22,27 @@ export function SpotifyPlaylistParaPlaylist(playlist: SpotifyApi.PlaylistObjectS
         
     } /* A ideia de mapear o objeto do spotify para um objeto do nosso projeto é para que sejamos menos dependente do Spotify e assim ao haver alguma mudança no projeto deles ou na API isso não acabe dando pal no nosso projeto */
 }
+
+export function SpotifyAlbumParaAlbum(album: SpotifyApi.AlbumObjectSimplified): IAlbum{
+    return {
+        id: album.id,
+        nome: album.name,
+        imagemUrl: album.images.pop().url
+    }
+}
+
+export function SpotifySingleArtistaParaArtista(artista: SpotifyApi.SingleArtistResponse) {
+    if (!artista) {
+        return newArtista();
+    }
+
+    return {
+        id: artista.id,
+        nome: artista.name,
+        imagemUrl: artista.images.shift().url,
+        albums: []
+    }
+} // Aqui estou apenas convertendo os dados a playlist para minhas próprias variaveis
 
 export function SpotifySinglePlaylistParaPlaylist(playlist: SpotifyApi.SinglePlaylistResponse) {
     if (!playlist) {
@@ -67,5 +89,18 @@ export function SpotifyTrackParaMusica(spotifyTrack: SpotifyApi.TrackObjectFull)
             nome: artista.name
         })),
         tempo: msParaMinutos(spotifyTrack.duration_ms) // Para manipular tempo é interessante baixar o "npm i date-fns"
+    }
+}
+
+export function SpotifyObjectAlbumParaAlbum(spotifyAlbum: SpotifyApi.AlbumObjectSimplified): IAlbum{
+
+    if (!spotifyAlbum) {
+        return newAlbum();
+    }
+
+    return {
+        id: spotifyAlbum.uri,
+        nome: spotifyAlbum.name,
+        imagemUrl: spotifyAlbum.images.shift().url
     }
 }

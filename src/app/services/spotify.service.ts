@@ -3,12 +3,13 @@ import { SpotifyConfiguration } from 'src/environments/environment';
 import { SpotifuConfiguration } from 'src/environments/environment.prod';
 import Spotify from 'spotify-web-api-js';
 import { IUsuario } from '../interfaces/IUsuario';
-import { SpotifyArtistaParaArtista, SpotifyPlaylistParaPlaylist, SpotifySinglePlaylistParaPlaylist, SpotifyTrackParaMusica, SpotifyUserParaUsuario } from '../Common/spotifyHelper';
+import { SpotifyAlbumParaAlbum, SpotifyArtistaParaArtista, SpotifyObjectAlbumParaAlbum, SpotifyPlaylistParaPlaylist, SpotifySingleArtistaParaArtista, SpotifySinglePlaylistParaPlaylist, SpotifyTrackParaMusica, SpotifyUserParaUsuario } from '../Common/spotifyHelper';
 import jwt_decode, {JwtPayload } from 'jwt-decode';
 import { IPlaylist } from '../interfaces/IPlaylist';
 import { Router } from '@angular/router';
 import { IArtista } from '../interfaces/IArtista';
 import { IMusica } from '../interfaces/IMusica';
+import { IAlbum } from '../interfaces/IAlbum';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +18,9 @@ export class SpotifyService {
 
   spotifyApi: Spotify.SpotifyWebApiJs = null;
   usuario: IUsuario; // ID do usuario na interface
+  artista: IArtista; // ID do artista
 
-  constructor(private router: Router) { 
+  constructor(private router: Router) {
     this.spotifyApi = new Spotify();
   }
 
@@ -102,6 +104,21 @@ export class SpotifyService {
     return playlist;
   }
 
+  async buscarAlbumsArtista(artistaId: string, offset = 0, limit = 50) {
+    const artistaSpotify = await this.spotifyApi.getArtist(artistaId)
+
+    if (!artistaSpotify)
+      return null;
+
+    const artista = SpotifySingleArtistaParaArtista(artistaSpotify);
+    
+    const albumsSpotify = await this.spotifyApi.getArtistAlbums(artistaId, { offset, limit });
+
+    artista.albums = albumsSpotify.items.map(album => SpotifyObjectAlbumParaAlbum(album as SpotifyApi.AlbumObjectSimplified));
+
+    return artista;
+  }
+
   async buscarTopArtistas(limit = 10):Promise<IArtista[]> {
     const artistas = await this.spotifyApi.getMyTopArtists({ limit });
     return artistas.items.map(SpotifyArtistaParaArtista);
@@ -110,6 +127,11 @@ export class SpotifyService {
   async buscarMusicas(offset = 0, limit = 50): Promise<IMusica[]>{
     const musicas = await this.spotifyApi.getMySavedTracks({ offset, limit });
     return musicas.items.map(x => SpotifyTrackParaMusica(x.track));
+  }
+
+  async buscarAlbums(offset = 0, limit = 50): Promise<IAlbum[]>{
+    const albums = await this.spotifyApi.getArtistAlbums(this.artista.id, {offset, limit});
+    return albums.items.map(SpotifyAlbumParaAlbum);
   }
 
   async executarMusica(musicaId: string){
@@ -137,7 +159,7 @@ export class SpotifyService {
 
 }
 
-/* 
+/*
 É por isso que dizemos que um Service no Angular é um singleton - ele é criado uma única vez e compartilhado por todos os componentes que o utilizam. Isso pode ser útil para compartilhar dados e funcionalidades comuns em toda a sua aplicação, sem precisar criar novas instâncias do serviço sempre que ele for necessário.
 */
 

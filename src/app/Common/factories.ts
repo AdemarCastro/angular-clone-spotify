@@ -1,3 +1,4 @@
+import { IAlbum } from "../interfaces/IAlbum";
 import { IArtista } from "../interfaces/IArtista";
 import { IMusica } from "../interfaces/IMusica";
 import { IPlaylist } from "../interfaces/IPlaylist";
@@ -7,6 +8,7 @@ export function newArtista(): IArtista {
         id: '',
         imagemUrl: '',
         nome: '',
+        albums: [],
         musicas: []
     };
 }
@@ -17,11 +19,19 @@ export function newMusica(): IMusica {
         album: {
             id: '',
             imagemUrl: '',
-            nome: ''
+            nome: '',
         },
         artistas: [],
         tempo: '',
         titulo: ''
+    }
+}
+
+export function newAlbum(): IAlbum {
+    return {
+        id: '',
+        nome: '',
+        imagemUrl: ''
     }
 }
 

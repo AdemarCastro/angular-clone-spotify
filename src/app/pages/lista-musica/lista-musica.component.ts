@@ -48,9 +48,9 @@ export class ListaMusicaComponent implements OnInit, OnDestroy{
     this.subs.push(sub);
   }
 
-  obterMusicas() { 
+  obterMusicas() {
     const sub = this.activedRoute.paramMap
-      .subscribe(async params => { 
+      .subscribe(async params => {
         /* console.log(params.get('tipo'));
         console.log(params.get('id')); */
 
@@ -75,7 +75,8 @@ export class ListaMusicaComponent implements OnInit, OnDestroy{
     this.title = 'Musicas Playlist: ' + playlistMusicas.nome;
   }
 
-  async obterDadosArtista(artistaId: string) {
+  async obterDadosArtista(artistaId: string) { // Eu posso fazer isso depois, é mais fácil do que quero fazer agora,
+    // apenas retornar as 50 melhores músicas do artista selecionado.
 
   }
 

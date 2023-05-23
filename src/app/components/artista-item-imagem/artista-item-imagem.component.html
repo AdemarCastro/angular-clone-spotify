@@ -1,6 +1,10 @@
-<div class="flex container" (click)="onClick()">
+<button class="flex container"
+    type="button"
+    [class.selecionado]="selecionado"
+    (click)="onClick()"
+    >
     <img [src]="imagemSrc">
     <span>
         <ng-content></ng-content>
     </span>
-</div>
+</button>

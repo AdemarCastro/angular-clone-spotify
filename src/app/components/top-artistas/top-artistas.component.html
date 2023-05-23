@@ -3,6 +3,8 @@
     *ngFor="let artista of artistas"
     class="mt-1 artista"
     [imagemSrc]="artista.imagemUrl"
+    [selecionado]="menuSelecionado === artista.id"
+    (click)="irParaArtista(artista.id)"
 >
     {{ artista.nome }}
 </app-artista-item-imagem>

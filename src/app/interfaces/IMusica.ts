@@ -8,7 +8,7 @@ export interface IMusica {
     album: {
         id: string,
         nome: string,
-        imagemUrl: string
+        imagemUrl: string,
     },
     tempo: string
 }

@@ -1,8 +1,12 @@
+import { IAlbum } from "./IAlbum";
 import { IMusica } from "./IMusica";
+import { IPlaylist } from "./IPlaylist";
 
 export interface IArtista {
     id: string,
     nome: string,
     imagemUrl: string,
-    musicas?: IMusica[] // Interrogação significa que eu gero se quiser, ou seja, é opcional
+    playlists?: IPlaylist[],
+    musicas?: IMusica[],
+    albums?: IAlbum[]
 }

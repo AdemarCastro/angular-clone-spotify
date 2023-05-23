@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 import { AppRotas } from './app.routes';
+import { ListaAlbumArtistaComponent } from './pages/lista-album-artista/lista-album-artista.component';
 
 @NgModule({
   declarations: [

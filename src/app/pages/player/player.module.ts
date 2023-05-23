@@ -17,6 +17,7 @@ import { ArtistaItemImagemComponent } from 'src/app/components/artista-item-imag
 import { PlayerCardComponent } from 'src/app/components/player-card/player-card.component';
 import { ListaMusicaComponent } from '../lista-musica/lista-musica.component';
 import { BannerComponent } from 'src/app/components/banner/banner.component';
+import { ListaAlbumArtistaComponent } from '../lista-album-artista/lista-album-artista.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { BannerComponent } from 'src/app/components/banner/banner.component';
     ArtistaItemImagemComponent,
     PlayerCardComponent,
     ListaMusicaComponent,
+    ListaAlbumArtistaComponent,
     BannerComponent
   ],
   imports: [
