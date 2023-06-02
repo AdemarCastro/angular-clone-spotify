@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { Subscribable, Subscription } from 'rxjs';
 import { newMusica } from 'src/app/Common/factories';
+import { IAlbum } from 'src/app/interfaces/IAlbum';
+import { IArtista } from 'src/app/interfaces/IArtista';
 import { IMusica } from 'src/app/interfaces/IMusica';
 import { PlayerService } from 'src/app/services/player.service';
 import { SpotifyService } from 'src/app/services/spotify.service';
@@ -20,6 +22,8 @@ export class ListaMusicaComponent implements OnInit, OnDestroy{
   musicas: IMusica[] = [];
   musicaAtual: IMusica = newMusica();
   playIcone = faPlay;
+
+  rotaAtual = '';
 
   title = '';
 
@@ -49,6 +53,7 @@ export class ListaMusicaComponent implements OnInit, OnDestroy{
   }
 
   obterMusicas() {
+
     const sub = this.activedRoute.paramMap
       .subscribe(async params => {
         /* console.log(params.get('tipo'));
@@ -63,16 +68,33 @@ export class ListaMusicaComponent implements OnInit, OnDestroy{
   }
 
   async obterDadosPagina(tipo: string, id: string) {
-    if(tipo === 'playlist')
+    if(tipo === 'playlist') {
+      this.rotaAtual = tipo;
       await this.obterDadosPlaylist(id);
-    else
-      await this.obterDadosArtista(id);
+    } else if (tipo === 'album') {
+      /* const newId = await this.tratarIdAlbum(id); */
+      this.rotaAtual = tipo;
+      const albumId = id.match(/[^:]+$/)?.[0];
+      await this.obterDadosAlbum(albumId);
+    }
   }
 
   async obterDadosPlaylist(playlistId: string) {
     const playlistMusicas = await this.spotifyService.buscarMusicasPlaylist(playlistId);
-    this.definirDadosPagina(playlistMusicas.nome, playlistMusicas.imagemUrl, playlistMusicas.musicas) // Separa as variaveis do objeto recebido em playlistMusicas
+    this.definirDadosPagina(playlistMusicas.nome, playlistMusicas.imagemUrl, playlistMusicas.musicas); // Separa as variaveis do objeto recebido em playlistMusicas
     this.title = 'Musicas Playlist: ' + playlistMusicas.nome;
+    console.log(playlistMusicas.nome)
+    console.log(playlistMusicas.musicas);
+    console.log(playlistMusicas.imagemUrl);
+  }
+
+  async obterDadosAlbum(albumId: string) {
+    const albumMusicas = await this.spotifyService.buscarMusicasAlbum(albumId);
+    this.definirDadosPagina(albumMusicas.nome, albumMusicas.imagemUrl, albumMusicas.musicas);
+    this.title = 'Musicas Album: ' + albumMusicas.nome;
+    console.log(albumMusicas.nome)
+    console.log(albumMusicas.musicas);
+    console.log(albumMusicas.imagemUrl);
   }
 
   async obterDadosArtista(artistaId: string) { // Eu posso fazer isso depois, é mais fácil do que quero fazer agora,
@@ -92,6 +114,18 @@ export class ListaMusicaComponent implements OnInit, OnDestroy{
   }
 
   obterArtistas(musica: IMusica) {
-    return musica.artistas.map(artista => artista.nome).join(', ');
+    const artistas = musica.artistas?.map(artista => artista.nome);
+
+    return artistas?.join(', ') ?? '';
+  }
+
+  obterAlbum(musica: IMusica) {
+    let album = '';
+
+    if(musica.album) {
+      album = musica.album.nome;
+    }
+
+    return album;
   }
 }

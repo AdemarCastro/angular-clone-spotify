@@ -10,13 +10,19 @@
             <tr>
                 <th class="w-5">#</th>
                 <th class="w-35">Titulo</th>
-                <th class="w-30">Artista</th>
-                <th class="w-20">Album</th>
+                <ng-container *ngIf="rotaAtual === 'playlist'">
+                    <th class="w-30">Artista</th>
+                    <th class="w-20">Album</th>
+                </ng-container>
+                <ng-container *ngIf="rotaAtual === 'album'">
+                    <th class="w-30"> </th>
+                    <th class="w-20"> </th>
+                </ng-container>
                 <th class="w-10 direita">Tempo</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let musica of musicas" 
+            <tr *ngFor="let musica of musicas"
                 (click)="executarMusica(musica)"
                 [class.executando]="musica.id === musicaAtual.id"
                 >
@@ -26,7 +32,7 @@
                 </td>
                 <td>{{ musica.titulo }}</td>
                 <td>{{ obterArtistas(musica) }}</td>
-                <td>{{ musica.album.nome }}</td>
+                <td>{{ obterAlbum(musica) }}</td>
                 <td class="direita">{{ musica.tempo }}</td>
             </tr>
         </tbody>

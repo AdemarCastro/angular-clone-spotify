@@ -3,7 +3,7 @@ import { SpotifyConfiguration } from 'src/environments/environment';
 import { SpotifuConfiguration } from 'src/environments/environment.prod';
 import Spotify from 'spotify-web-api-js';
 import { IUsuario } from '../interfaces/IUsuario';
-import { SpotifyAlbumParaAlbum, SpotifyArtistaParaArtista, SpotifyObjectAlbumParaAlbum, SpotifyPlaylistParaPlaylist, SpotifySingleArtistaParaArtista, SpotifySinglePlaylistParaPlaylist, SpotifyTrackParaMusica, SpotifyUserParaUsuario } from '../Common/spotifyHelper';
+import { SpotifyAlbumParaAlbum, SpotifyArtistaParaArtista, SpotifyObjectAlbumParaAlbum, SpotifyPlaylistParaPlaylist, SpotifySingleAlbumParaAlbum, SpotifySingleArtistaParaArtista, SpotifySinglePlaylistParaPlaylist, SpotifyTrackFullParaMusica, SpotifyTrackSimplifiedParaMusica, SpotifyUserParaUsuario } from '../Common/spotifyHelper';
 import jwt_decode, {JwtPayload } from 'jwt-decode';
 import { IPlaylist } from '../interfaces/IPlaylist';
 import { Router } from '@angular/router';
@@ -99,9 +99,24 @@ export class SpotifyService {
 
     const musicasSpotify = await this.spotifyApi.getPlaylistTracks(playlistId, { offset, limit });
 
-    playlist.musicas = musicasSpotify.items.map(musica => SpotifyTrackParaMusica(musica.track as SpotifyApi.TrackObjectFull)); // Estou confirmando que a informação que está chegando é TrackObjectFull
+    playlist.musicas = musicasSpotify.items.map(musica => SpotifyTrackFullParaMusica(musica.track as SpotifyApi.TrackObjectFull)); // Estou confirmando que a informação que está chegando é TrackObjectFull
 
     return playlist;
+  }
+
+  async buscarMusicasAlbum(albumId: string, offset = 0, limit = 50) {
+    const albumSpotify = await this.spotifyApi.getAlbum(albumId);
+
+    if (!albumSpotify)
+      return null;
+
+    const album = SpotifySingleAlbumParaAlbum(albumSpotify);
+
+    const musicasSpotify = await this.spotifyApi.getAlbumTracks(albumId, { offset, limit });
+
+    album.musicas = musicasSpotify.items.map(musica => SpotifyTrackSimplifiedParaMusica(musica as SpotifyApi.TrackObjectSimplified));
+
+    return album;
   }
 
   async buscarAlbumsArtista(artistaId: string, offset = 0, limit = 50) {
@@ -126,7 +141,8 @@ export class SpotifyService {
 
   async buscarMusicas(offset = 0, limit = 50): Promise<IMusica[]>{
     const musicas = await this.spotifyApi.getMySavedTracks({ offset, limit });
-    return musicas.items.map(x => SpotifyTrackParaMusica(x.track));
+
+    return musicas.items.map(x => SpotifyTrackFullParaMusica(x.track));
   }
 
   async buscarAlbums(offset = 0, limit = 50): Promise<IAlbum[]>{
@@ -140,8 +156,12 @@ export class SpotifyService {
   }
 
   async obterMusicaAtual(): Promise<IMusica> {
-    const musicaSpotify = await this.spotifyApi.getMyCurrentPlayingTrack();
-    return SpotifyTrackParaMusica(musicaSpotify.item);
+    const item = (await this.spotifyApi?.getMyCurrentPlayingTrack())?.item;
+
+    if (item.type = 'track')
+      return SpotifyTrackFullParaMusica(item);
+    else
+      return SpotifyTrackSimplifiedParaMusica(item);
   }
 
   async voltarMusica() {

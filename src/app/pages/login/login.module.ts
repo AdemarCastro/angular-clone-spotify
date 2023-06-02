@@ -15,7 +15,7 @@ import { LoginRotas } from './login.routes';
 })
 export class LoginModule { }
 
-/* 
+/*
 Todo componente no Angular tem:
 >login.component.html: Estrutura HTML do site que eu vejo na página
 >login.component.scss: Estrutura CSS em que estilizo o design da página. Toda classe, variável que criar para esse componente será utilizado apenas neste componente. O Angular é totalmente scopado.

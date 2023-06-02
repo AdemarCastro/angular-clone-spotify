@@ -22,7 +22,7 @@ export class ArtistaItemImagemComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-      
+    
   }
 
   onClick() {

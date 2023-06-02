@@ -1,34 +1,32 @@
 <div class="lista">
-  <app-banner [imagemUrl]="bannerImagemUrl" [text]="bannerTexto"></app-banner>
+    <app-banner [imagemUrl]="bannerImagemUrl" [text]="bannerTexto"></app-banner>
 
-  <div class="titulo-bg mt-7">
-      {{ title }}
-  </div>
+    <div class="titulo-bg mt-7">
+        {{ title }}
+    </div>
 
-  <table class="table mt-3">
-      <thead>
-          <tr>
-              <th class="w-5">#</th>
-              <th class="w-35">Jorge</th>
-              <th class="w-30">Artista</th>
-              <th class="w-20">Album</th>
-              <th class="w-10 direita">Tempo</th>
-          </tr>
-      </thead>
-      <tbody>
-          <tr *ngFor="let album of albums"
-              >
+    <table class="table mt-3">
+        <thead>
+            <tr>
+                <th class="w-5">#</th>
+                <th class="w-35">Titulo</th>
+                <th class="w-30"></th>
+                <th class="w-20"></th>
+                <th class="w-10 direita"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let album of albums"
+                (click)="irParaListaMusica(album.id)"
+                >
 
-              <td>
-                  <fa-icon class="play" [icon]="playIcone" ></fa-icon>
-              </td>
-              <td>{{ album.nome }}</td>
-              <!-- <td>{{ obterArtistas(musica) }}</td> -->
-              <!-- <td>{{ musica.album.nome }}</td> -->
-              <!-- <td class="direita">{{  }}</td> -->
-          </tr>
-      </tbody>
-  </table>
+                <td>
+                    <fa-icon class="play" [icon]="playIcone" ></fa-icon>
+                </td>
+                <td>{{ album.nome }}</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 
 <app-painel-direito class="painel-direito"></app-painel-direito>

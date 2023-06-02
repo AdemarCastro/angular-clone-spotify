@@ -31,6 +31,7 @@ export function SpotifyAlbumParaAlbum(album: SpotifyApi.AlbumObjectSimplified): 
     }
 }
 
+ // Aqui estou apenas convertendo os dados a playlist para minhas próprias variaveis
 export function SpotifySingleArtistaParaArtista(artista: SpotifyApi.SingleArtistResponse) {
     if (!artista) {
         return newArtista();
@@ -57,6 +58,19 @@ export function SpotifySinglePlaylistParaPlaylist(playlist: SpotifyApi.SinglePla
     }
 } // Aqui estou apenas convertendo os dados a playlist para minhas próprias variaveis
 
+export function SpotifySingleAlbumParaAlbum(album: SpotifyApi.SingleAlbumResponse) {
+    if (!album) {
+        return newAlbum();
+    }
+
+    return {
+        id: album.id,
+        nome: album.name,
+        imagemUrl: album.images.shift().url,
+        musicas: []
+    }
+}
+
 export function SpotifyArtistaParaArtista(spotifyArtista: SpotifyApi.ArtistObjectFull): IArtista{
     return {
         id: spotifyArtista.id,
@@ -65,7 +79,7 @@ export function SpotifyArtistaParaArtista(spotifyArtista: SpotifyApi.ArtistObjec
     };
 }
 
-export function SpotifyTrackParaMusica(spotifyTrack: SpotifyApi.TrackObjectFull): IMusica{
+export function SpotifyTrackFullParaMusica(spotifyTrack: SpotifyApi.TrackObjectFull): IMusica{
 
     if (!spotifyTrack) {
         return newMusica();
@@ -80,14 +94,32 @@ export function SpotifyTrackParaMusica(spotifyTrack: SpotifyApi.TrackObjectFull)
         id: spotifyTrack.uri,
         titulo: spotifyTrack.name,
         album: {
-            id: spotifyTrack.id,
-            imagemUrl: spotifyTrack.album.images.shift().url,
-            nome: spotifyTrack.album.name
+            id: spotifyTrack?.album?.id,
+            imagemUrl: spotifyTrack?.album?.images?.shift()?.url,
+            nome: spotifyTrack?.album?.name
         },
         artistas: spotifyTrack.artists.map(artista => ({
-            id: artista.id,
-            nome: artista.name
+            id: artista?.id,
+            nome: artista?.name
         })),
+        tempo: msParaMinutos(spotifyTrack.duration_ms) // Para manipular tempo é interessante baixar o "npm i date-fns"
+    }
+}
+
+export function SpotifyTrackSimplifiedParaMusica(spotifyTrack: SpotifyApi.TrackObjectSimplified): IMusica{
+
+    if (!spotifyTrack) {
+        return newMusica();
+    }
+
+    const msParaMinutos = (ms: number) => {
+        const data = addMilliseconds(new Date(0), ms);
+        return format(data, 'mm:ss');
+    }
+
+    return {
+        id: spotifyTrack.uri,
+        titulo: spotifyTrack.name,
         tempo: msParaMinutos(spotifyTrack.duration_ms) // Para manipular tempo é interessante baixar o "npm i date-fns"
     }
 }

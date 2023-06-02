@@ -27,7 +27,7 @@ export class PlayerService {
     // Causo loop a cada 3s
     this.timerId = setInterval(async () => {
       await this.obterMusicaAtual();
-    }, 3000)
+    }, 2000)
   }
 
   definirMusicaAtual(musica: IMusica) {

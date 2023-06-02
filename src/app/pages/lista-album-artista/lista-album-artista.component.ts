@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { newMusica } from 'src/app/Common/factories';
@@ -26,6 +26,8 @@ export class ListaAlbumArtistaComponent implements OnInit, OnDestroy{
   musicaAtual: IMusica = newMusica();
   playIcone = faPlay;
 
+  menuSelecionado = '';
+
   title = '';
 
   subs: Subscription[] = [];
@@ -33,7 +35,8 @@ export class ListaAlbumArtistaComponent implements OnInit, OnDestroy{
   constructor (
     private activedRoute: ActivatedRoute,
     private spotifyService: SpotifyService,
-    private playerService: PlayerService
+    private playerService: PlayerService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -83,6 +86,13 @@ export class ListaAlbumArtistaComponent implements OnInit, OnDestroy{
     this.bannerImagemUrl = bannerImage;
     this.bannerTexto = bannerTexto;
     this.albums = albums;
+
+    console.log(albums);
+  }
+
+  irParaListaMusica(albumId: string) {
+    this.menuSelecionado = albumId;
+    this.router.navigateByUrl(`player/lista/album/${albumId}`);
   }
 
   obterArtistas(album: IAlbum) {

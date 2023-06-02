@@ -31,7 +31,8 @@ export function newAlbum(): IAlbum {
     return {
         id: '',
         nome: '',
-        imagemUrl: ''
+        imagemUrl: '',
+        musicas: []
     }
 }
 
