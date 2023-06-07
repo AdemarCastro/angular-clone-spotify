@@ -76,6 +76,11 @@ export class ListaMusicaComponent implements OnInit, OnDestroy{
       this.rotaAtual = tipo;
       const albumId = id.match(/[^:]+$/)?.[0];
       await this.obterDadosAlbum(albumId);
+    } else if (tipo === 'pesquisa') {
+      this.rotaAtual = tipo;
+      const pesquisa = id;
+      await this.obterDadosPesquisa(pesquisa);
+      /* await this.obterDados() */
     }
   }
 
@@ -95,6 +100,22 @@ export class ListaMusicaComponent implements OnInit, OnDestroy{
     console.log(albumMusicas.nome)
     console.log(albumMusicas.musicas);
     console.log(albumMusicas.imagemUrl);
+  }
+
+  async obterDadosPesquisa(pesquisa: string) {
+    /* console.log('Buscando...', pesquisa); */
+
+    this.spotifyService.buscarPesquisa(pesquisa).then((musicas) => {
+      console.log(musicas);
+
+      this.definirDadosPagina(pesquisa, musicas[0].album.imagemUrl, musicas);
+      this.title = 'Pesquisa: ' + pesquisa;
+      
+    }).catch((erro) => {
+      console.log("Ocorreu um erro ao buscar a pesquisa: ", erro);
+      return null;
+    });
+
   }
 
   async obterDadosArtista(artistaId: string) { // Eu posso fazer isso depois, é mais fácil do que quero fazer agora,

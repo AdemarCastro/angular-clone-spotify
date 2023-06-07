@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { IMusica } from 'src/app/interfaces/IMusica';
+import { SpotifyService } from 'src/app/services/spotify.service';
 
 @Component({
   selector: 'app-buscas-recentes',
@@ -7,13 +10,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BuscasRecentesComponent implements OnInit{
 
-  campoPesquisa = ''
+  campoPesquisa = '';
+
+  pesquisarMusicas: IMusica[] = [];
 
   pesquisasRecentes = [
     'Top Brasil', 'League of Legends', 'Hunter x Hunter', 'Trilha Sonora The Witcher 3'
   ]
 
-  constructor() { }
+  constructor(
+    private spotifyService: SpotifyService,
+    private router: Router) { }
 
   ngOnInit(): void {
       
@@ -24,6 +31,6 @@ export class BuscasRecentesComponent implements OnInit{
   }
 
   buscar() {
-    console.log('Buscando...', this.campoPesquisa);
+    this.router.navigateByUrl(`player/lista/pesquisa/${this.campoPesquisa}`);
   }
 }

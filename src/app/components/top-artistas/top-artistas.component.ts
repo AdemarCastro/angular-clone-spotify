@@ -12,17 +12,6 @@ import { Router } from '@angular/router';
 })
 export class TopArtistasComponent implements OnInit{
 
-/*   @ViewChild(ArtistaItemImagemComponent) artistaItemImagemComponent: ArtistaItemImagemComponent;
-
-  @Input()
-  descricao: string;
-
-  @Input()
-  selecionado: boolean;
-
-  @Output()
-  click2 = new EventEmitter(); */
-
   artistas: IArtista[] = [];
   menuSelecionado = 'Home';
   albums: IAlbum[] = [];
@@ -54,8 +43,3 @@ export class TopArtistasComponent implements OnInit{
     this.albums = await this.spotifyService.buscarAlbums();
   }
 }
-
-
-/* this.artistaItemImagemComponent.click.subscribe(() => {
-  this.click2.emit();
-}) */

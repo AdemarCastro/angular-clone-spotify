@@ -150,6 +150,12 @@ export class SpotifyService {
     return albums.items.map(SpotifyAlbumParaAlbum);
   }
 
+  async buscarPesquisa(campoPesquisa: string, offset = 0, limit = 50) {
+    const musicas = await this.spotifyApi.searchTracks(campoPesquisa, { offset, limit });
+
+    return musicas.tracks.items.map(x => SpotifyTrackFullParaMusica(x));
+  }
+
   async executarMusica(musicaId: string){
     await this.spotifyApi.queue(musicaId);
     await this.spotifyApi.skipToNext();
