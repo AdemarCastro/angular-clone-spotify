@@ -3,7 +3,7 @@
         Seu Top Artista
     </span>
 
-    <app-top-artista class="mt-2 d-block"></app-top-artista> 
+    <app-top-artista class="mt-2 d-block"></app-top-artista>
 
     <span class="titulo-bg mt-4">
         Musicas Curtidas
@@ -20,13 +20,11 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let musica of musicas"
-                (click)="executarMusica(musica)"
-                [class.executando]="musica.id === musicaAtual.id"
-                >
+            <tr *ngFor="let musica of musicas" (click)="executarMusica(musica)"
+                [class.executando]="musica.id === musicaAtual.id">
 
                 <td>
-                    <fa-icon class="play" [icon]="playIcone" ></fa-icon>
+                    <fa-icon class="play" [icon]="playIcone"></fa-icon>
                 </td>
                 <td>{{ musica.titulo }}</td>
                 <td>{{ obterArtistas(musica) }}</td>

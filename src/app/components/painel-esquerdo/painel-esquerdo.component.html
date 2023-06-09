@@ -4,7 +4,7 @@
     </div>
 
     <div class="menu-container flex opcoes">
-        <app-botao-menu 
+        <app-botao-menu
             [descricao]="'Home'"
             [selecionado]="menuSelecionado === 'Home'"
             (click)="botaoClick('Home')"
@@ -12,18 +12,18 @@
             <fa-icon [icon]="homeIcone"></fa-icon>
         </app-botao-menu>
 
-        <app-botao-menu 
+        <app-botao-menu
             [descricao]="'Pesquisar'"
             [selecionado]="menuSelecionado === 'Pesquisar'"
-            (click)="botaoClick('Pesquisar')"   
+            (click)="botaoClick('Pesquisar')"
         >
             <fa-icon [icon]="pesquisarIcone"></fa-icon>
         </app-botao-menu>
 
-        <app-botao-menu 
-            [descricao]="'Artistas'"
-            [selecionado]="menuSelecionado === 'Artistas'"
-            (click)="botaoClick('Artistas')"
+        <app-botao-menu
+            [descricao]="'Favoritos'"
+            [selecionado]="menuSelecionado === 'Favoritos'"
+            (click)="botaoClick('Favoritos')"
         >
             <fa-icon [icon]="artistaIcone"></fa-icon>
         </app-botao-menu>

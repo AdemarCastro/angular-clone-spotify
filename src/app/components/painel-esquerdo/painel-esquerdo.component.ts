@@ -31,7 +31,10 @@ export class PainelEsquerdoComponent implements OnInit{
 
   botaoClick(botao: string) {
     this.menuSelecionado = botao;
-    this.router.navigateByUrl('player/home'); // Ao clicar em Home é encaminhado para a rota de Home
+
+    if (this.menuSelecionado === 'Home') this.router.navigateByUrl('player/home');
+    else if (this.menuSelecionado === 'Pesquisar') this.router.navigateByUrl('player/home');
+    else if (this.menuSelecionado === 'Favoritos')this.router.navigateByUrl('player/favoritos');
   }
 
   irParaPlaylist(playlistId: string) {

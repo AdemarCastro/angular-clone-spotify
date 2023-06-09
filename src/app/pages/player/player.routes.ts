@@ -3,6 +3,7 @@ import { PlayerComponent } from "./player.component";
 import { HomeComponent } from "../home/home.component";
 import { ListaMusicaComponent } from "../lista-musica/lista-musica.component";
 import { ListaAlbumArtistaComponent } from "../lista-album-artista/lista-album-artista.component";
+import { FavoritosComponent } from "../favoritos/favoritos.component";
 
 export const PlayerRotas: Routes = [
     {
@@ -12,6 +13,10 @@ export const PlayerRotas: Routes = [
             {
                 path: 'home',
                 component: HomeComponent
+            },
+            {
+                path: 'favoritos',
+                component: FavoritosComponent
             },
             {
                 path: 'lista/:tipo/:id',

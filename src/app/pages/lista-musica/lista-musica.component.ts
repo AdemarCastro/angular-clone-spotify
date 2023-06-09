@@ -6,6 +6,7 @@ import { newMusica } from 'src/app/Common/factories';
 import { IAlbum } from 'src/app/interfaces/IAlbum';
 import { IArtista } from 'src/app/interfaces/IArtista';
 import { IMusica } from 'src/app/interfaces/IMusica';
+import { BancoService } from 'src/app/services/banco.service';
 import { PlayerService } from 'src/app/services/player.service';
 import { SpotifyService } from 'src/app/services/spotify.service';
 
@@ -27,21 +28,34 @@ export class ListaMusicaComponent implements OnInit, OnDestroy{
 
   title = '';
 
+  isResultLoaded: boolean;
+  FavoritosArray: any[] = [];
+
   subs: Subscription[] = [];
 
   constructor(
     private activedRoute: ActivatedRoute,
     private spotifyService: SpotifyService,
-    private playerService: PlayerService
-    ) { }
+    private playerService: PlayerService,
+    private bancoService: BancoService
+    ) {  }
 
   ngOnInit(): void {
     this.obterMusicas();
     this.obterMusicaAtual();
+    this.teste();
   }
 
   ngOnDestroy(): void {
     this.subs.forEach(sub => sub.unsubscribe());
+  }
+
+  teste() {
+    this.bancoService.getMusicasFavoritas().subscribe((resultData: any) => {
+      this.isResultLoaded = true;
+      console.log(resultData.data);
+      this.FavoritosArray = resultData.data;
+    })
   }
 
   obterMusicaAtual() {

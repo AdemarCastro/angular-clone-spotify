@@ -1,15 +1,15 @@
 <div class="container card p-10">
-    <div class="image" [style.background-image]="'url(' + musica.album.imagemUrl + ')'"></div>
+    <div *ngIf="musica.album.imagemUrl" class="image" [style.background-image]="'url(' + musica.album.imagemUrl + ')'"></div>
     <div class="controles">
         <span> {{ musica.titulo }} </span>
         <div class="botoes mt-1">
-            <fa-icon 
+            <fa-icon
                 [icon]="anteriorIcone"
                 (click)="voltarMusica()"
                 >
             </fa-icon>
 
-            <fa-icon 
+            <fa-icon
                 [icon]="proximoIcone"
                 (click)="proximaMusica()"
                 >

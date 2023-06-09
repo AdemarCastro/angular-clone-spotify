@@ -18,6 +18,7 @@ import { PlayerCardComponent } from 'src/app/components/player-card/player-card.
 import { ListaMusicaComponent } from '../lista-musica/lista-musica.component';
 import { BannerComponent } from 'src/app/components/banner/banner.component';
 import { ListaAlbumArtistaComponent } from '../lista-album-artista/lista-album-artista.component';
+import { FavoritosComponent } from '../favoritos/favoritos.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { ListaAlbumArtistaComponent } from '../lista-album-artista/lista-album-a
     PlayerCardComponent,
     ListaMusicaComponent,
     ListaAlbumArtistaComponent,
-    BannerComponent
+    BannerComponent,
+    FavoritosComponent
   ],
   imports: [
     CommonModule,

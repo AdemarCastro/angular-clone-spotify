@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { IArtista } from '../interfaces/IArtista';
 import { IMusica } from '../interfaces/IMusica';
 import { IAlbum } from '../interfaces/IAlbum';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class SpotifyService {
   usuario: IUsuario; // ID do usuario na interface
   artista: IArtista; // ID do artista
 
-  constructor(private router: Router) {
+  constructor( private router: Router ) {
     this.spotifyApi = new Spotify();
   }
 
@@ -146,6 +147,9 @@ export class SpotifyService {
   }
 
   async buscarAlbums(offset = 0, limit = 50): Promise<IAlbum[]>{
+    if (!this.artista) {
+      return []; // Retorna um array vazio se this.artista não existe
+    }
     const albums = await this.spotifyApi.getArtistAlbums(this.artista.id, {offset, limit});
     return albums.items.map(SpotifyAlbumParaAlbum);
   }
@@ -156,19 +160,51 @@ export class SpotifyService {
     return musicas.tracks.items.map(x => SpotifyTrackFullParaMusica(x));
   }
 
+  async convertParaIMusica(obj: any): Promise<IMusica> {
+    return {
+      id: obj.id,
+      titulo: obj.titulo,
+      artistas: [
+        {
+          id: obj.artista_id,
+          nome: obj.artista_nome,
+        }
+      ],
+      album: {
+        id: obj.album_id,
+        nome: obj.album_nome,
+        imagemUrl: obj.album_imagemUrl,
+      },
+      tempo: obj.tempo
+    }
+  }
+
   async executarMusica(musicaId: string){
-    await this.spotifyApi.queue(musicaId);
-    await this.spotifyApi.skipToNext();
+    if (this.spotifyApi) {
+      await this.spotifyApi.queue(musicaId);
+      await this.spotifyApi.skipToNext();
+    } else {
+      console.error('spotifyApi is not defined');
+    }
   }
 
   async obterMusicaAtual(): Promise<IMusica> {
-    const item = (await this.spotifyApi?.getMyCurrentPlayingTrack())?.item;
+  const item = (await this.spotifyApi?.getMyCurrentPlayingTrack())?.item;
 
-    if (item.type = 'track')
-      return SpotifyTrackFullParaMusica(item);
-    else
-      return SpotifyTrackSimplifiedParaMusica(item);
+  if (item?.type === 'track') {
+    const musica: IMusica = SpotifyTrackFullParaMusica(item);
+    if (!musica.album.imagemUrl) {
+      musica.album.imagemUrl = 'assets/spotify-player-card.png';
+    }
+    return musica;
+  } else {
+    const musica: IMusica = SpotifyTrackSimplifiedParaMusica(item);
+    if (!musica.album.imagemUrl) {
+      musica.album.imagemUrl = 'assets/spotify-player-card.png';
+    }
+    return musica;
   }
+}
 
   async voltarMusica() {
     await this.spotifyApi.skipToPrevious();
@@ -182,7 +218,6 @@ export class SpotifyService {
     localStorage.clear();
     this.router.navigate(['/login']);
   }
-
 }
 
 /*
