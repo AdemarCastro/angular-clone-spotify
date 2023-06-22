@@ -18,7 +18,7 @@ const db = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "root",
-  database: "dbspotify",
+  database: "dbspotify"
 });
 
 db.connect(function (error) {
@@ -173,7 +173,8 @@ server.delete("/deletar-musica/:id", (req, res) => {
                   return;
                 }
 
-                res.status(200).send(`Música com ID ${idMusica} e artista com ID ${artistaId} excluídos com sucesso.`);
+                res.send({ status: 200, data: results });
+                console.log(`Música com ID ${idMusica} e artista com ID ${artistaId} excluídos com sucesso.`);
               });
             });
           });
@@ -200,7 +201,8 @@ server.delete("/deletar-musica/:id", (req, res) => {
 
             });
 
-            res.status(200).send(`Música com ID ${idMusica} excluída com sucesso.`);
+            res.send({ status: 200, data: results });
+            console.log(`Música com ID ${idMusica} excluída com sucesso.`);
           });
         }
       });
@@ -223,11 +225,10 @@ server.delete("/deletar-musica/:id", (req, res) => {
           res.status(500).send("Erro ao excluir música.");
           return;
         }
-
-        
         });
 
-        res.status(200).send(`Música com ID ${idMusica} excluída com sucesso.`);
+        res.send({ status: 200, data: results });
+        console.log(`Música com ID ${idMusica} excluída com sucesso.`);
       });
     }
   });

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { faPlay } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faPlay } from '@fortawesome/free-solid-svg-icons';
 import { Subscribable, Subscription } from 'rxjs';
 import { newMusica } from 'src/app/Common/factories';
 import { IAlbum } from 'src/app/interfaces/IAlbum';
@@ -22,7 +22,11 @@ export class ListaMusicaComponent implements OnInit, OnDestroy{
 
   musicas: IMusica[] = [];
   musicaAtual: IMusica = newMusica();
+
+  // IconePlay
   playIcone = faPlay;
+  // IconeHeart
+  heartIcone = faHeart;
 
   rotaAtual = '';
 

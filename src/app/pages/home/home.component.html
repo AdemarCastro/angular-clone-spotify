@@ -36,7 +36,7 @@
                 </td>
                 <td class="direita">{{ musica.tempo }}</td>
                 <td class="heart" (click)="musica.estaNosFavoritos ? removerFavorito(musica) : adicionarFavorito(musica); $event.stopPropagation()">
-                    <fa-icon [icon]="heartIcone" [id]="musica.estaNosFavoritos ? 'favorito' : ''"></fa-icon>
+                    <fa-icon [icon]="heartIcone" [ngClass]="{'coracao-preenchido': musica.estaNosFavoritos}"></fa-icon>
                 </td>
             </tr>
         </tbody>

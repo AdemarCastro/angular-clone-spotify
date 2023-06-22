@@ -19,6 +19,7 @@
                     <th class="w-20"> </th>
                 </ng-container>
                 <th class="w-10 direita">Tempo</th>
+                <th class="w-5"></th>
             </tr>
         </thead>
         <tbody>
@@ -34,6 +35,7 @@
                 <td>{{ obterArtistas(musica) }}</td>
                 <td>{{ obterAlbum(musica) }}</td>
                 <td class="direita">{{ musica.tempo }}</td>
+                <fa-icon [icon]="heartIcone" [ngClass]="{'coracao-preenchido': musica.estaNosFavoritos}"></fa-icon>
             </tr>
         </tbody>
     </table>

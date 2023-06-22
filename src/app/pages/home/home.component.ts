@@ -90,8 +90,12 @@ export class HomeComponent implements OnInit, OnDestroy{
     };
 
     this.http.post("http://localhost:8080/favoritos/add", bodyData).subscribe((resultData : any) => {
-      console.log(resultData);
-      alert("Música Registrada com Sucesso!");
+      try {
+        console.log(resultData);
+        musica.estaNosFavoritos = true;
+      } catch {
+        console.log(resultData);
+      }
     });
   }
 
@@ -116,7 +120,9 @@ export class HomeComponent implements OnInit, OnDestroy{
   removerFavorito(musica: IMusica) {
     const observer: Observer<any> = {
       next: response => {
-        console.log(`Música com ID ${musica.id} excluída com sucesso.`);
+        console.log(response); // Exibe a resposta completa da API
+        console.log(`Música com ID ${musica.id} excluída com sucesso: ${response.body}`);
+        musica.estaNosFavoritos = false;
       },
       error: error => {
         console.log(error);

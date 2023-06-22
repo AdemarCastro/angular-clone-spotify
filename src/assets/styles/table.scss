@@ -58,13 +58,16 @@ table {
             font-size: .85rem;
             color: $preto-transparente-70;
 
-            #favorito {
-                color:red;
-                font-size: .9rem;
+            .coracao-preenchido {
+                color: $cor-primaria;
             }
 
             &:nth-child(1) {
                 padding-left: 10px;
+            }
+
+            &:nth-child(6) {
+                color: $preto-transparente-70;
             }
         }
     }
