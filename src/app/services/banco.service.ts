@@ -15,7 +15,6 @@ import { IMusica } from '../interfaces/IMusica';
 export class BancoService {
 
   private urlApi = 'http://localhost:8080'
-  private urlAngular = 'http://localhost:4200'
 
   constructor( private http: HttpClient ) { }
 
@@ -23,21 +22,11 @@ export class BancoService {
     return this.http.get(`${this.urlApi}/favoritos`);
   }
 
-  postMusicasFavoritas(musica: IMusica) : Observable<any> {
-    const url = `${this.urlApi}/favoritos/add`;
-    console.log(url, musica);
-    return this.http.post<any>(url, musica);
+  getVerificarMusica(id : String) : Observable<any> {
+    return this.http.get(`${this.urlApi}/verificar-favorito/${id}`);
   }
 
-  getAgua() : Observable<any> {
-    return this.http.get(`${this.urlApi}/agua`);
+  deleteMusica(id: String) : Observable<any> {
+    return this.http.delete(`${this.urlApi}/deletar-musica/${id}`);
   }
-
-  postAgua(agua: any) : Observable<any> {
-    const url = "http://localhost:8080/agua/add";
-    console.log(url, agua);
-    return this.http.post(url, agua);
-  }
-
-
 }

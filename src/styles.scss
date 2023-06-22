@@ -31,17 +31,23 @@ html, body {
     &-bg { // Não coloca as propriedades acima dentro, mas com a propriedade extend .titulo é possível introduzir as propriedades de titulo dentro de bg
         @extend .titulo;
         font-size: 2.2rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
     
     &-md {
         @extend .titulo;
         font-size: 1.4rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
     
 }
 
 .mt {
-   @for $i from 1 to 10 {
+    @for $i from 1 to 10 {
     &-#{ $i } {
         margin-top: #{ $i }vh;
     }

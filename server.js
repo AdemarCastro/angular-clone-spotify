@@ -13,7 +13,7 @@ server.use(
   })
 );
 
-// Establish the database connection
+// Parte de conexão com o Banco de Dados
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -37,45 +37,7 @@ server.listen(8080, function check(error) {
   }
 });
 
-// Teste
-server.post("/agua/add", (req, res) => {
-  let details = {
-    id: req.body.id,
-    nome: req.body.nome
-  };
-
-  let sql_insere_agua = `INSERT INTO agua (id, nome) VALUES (?, ?)`;
-  let sql_values_agua = [
-    id = details.id,
-    nome = details.nome
-  ]
-
-  db.query(sql_insere_agua, sql_values_agua, (error, result) => {
-    if (error) {
-      res.send({ status: false, message: "Post agua falhou!"});
-      console.log("Post agua falhou!");
-    } else {
-      res.send({ status: true, data: result, message: "Post agua bem sucedido!"});
-      console.log("Post agua bem sucedido!");
-    }
-  });
-});
-
-server.get("/agua", (req, res) => {
-  var sql_mostra_agua = "SELECT * FROM agua";
-
-  db.query(sql_mostra_agua, (error, result) => {
-    if (error) {
-      res.send({ status: false, message: "Get agua falhou!" });
-      console.log("Get agua falhou!");
-    } else {
-      res.send({ status: true, agua: result, mensagem: "Get agua bem sucedido!" });
-      console.log("Get agua bem sucedido!");
-    }
-  });
-});
-
-// Create the Records
+// Cria a música no Banco de Dados
 server.post("/favoritos/add", (req, res) => {
   let details = {
     id: req.body.id,
@@ -145,10 +107,11 @@ server.post("/favoritos/add", (req, res) => {
 // Exibe a lista de favoritos
 server.get("/favoritos", (req, res) => {
   var sql =
-    "SELECT f.id, f.titulo, a.id AS artista_id, a.nome AS artista_nome, f.album_id, f.album_imagemUrl, f.album_nome, f.tempo " +
+    "SELECT f.id, f.titulo, GROUP_CONCAT(a.id SEPARATOR ', ') AS artista_id, GROUP_CONCAT(a.nome SEPARATOR ', ') AS artista_nome, f.album_id, f.album_imagemUrl, f.album_nome, f.tempo " +
     "FROM favorito f " +
     "JOIN favorito_artista fa ON f.id = fa.favorito_id " +
-    "JOIN artista a ON fa.artista_id = a.id;";
+    "JOIN artista a ON fa.artista_id = a.id " +
+    "GROUP BY f.id;";
   db.query(sql, function (error, result) {
     if (error) {
       console.log("Ocorreu um error ao tentar se conectar ao BD!");
@@ -157,4 +120,137 @@ server.get("/favoritos", (req, res) => {
       console.log("Operação realizada com sucesso!");
     }
   });
+});
+
+// Deletar música no Banco de Dados
+server.delete("/deletar-musica/:id", (req, res) => {
+  let idMusica = req.params.id;
+
+  // Verificar ID do artista relacionado à música
+  let sql = "SELECT artista_id FROM favorito_artista WHERE favorito_id = ?;";
+  db.query(sql, [idMusica], (error, results) => {
+    if (error) {
+      console.error(error);
+      res.status(500).send("Erro ao verificar artistas relacionados à música.");
+      return;
+    }
+
+    // Verificar se o artista da música está relacionado a outras músicas no Banco de Dados
+    if (results.length > 0) {
+      let artistaId = results[0].artista_id;
+      sql = "SELECT COUNT(*) AS Total FROM favorito_artista WHERE artista_id = ?;";
+      db.query(sql, [artistaId], (error, results) => {
+        if (error) {
+          console.error(error);
+          res.status(500).send("Erro ao verificar quantas músicas o artista está relacionado.");
+          return;
+        }
+
+        // Se o artista estiver relacionado a apenas uma música, exclua a música e o artista do Banco de Dados
+        if (results[0].total === 1) {
+          sql = "DELETE FROM favorito_artista WHERE artista_id = ?;";
+
+          db.query(sql, [artistaId], (error, results) => {
+            if (error) {
+              console.error(error);
+              res.status(500).send("Erro ao excluir artista relacionado à música.");
+              return;
+            }
+
+            sql = "DELETE FROM artista WHERE id = ?;";
+            db.query(sql, [artistaId], (error, results) => {
+              if (error) {
+                console.error(error);
+                res.status(500).send("Erro ao excluir artista.");
+                return;
+              }
+
+              sql = "DELETE FROM favorito WHERE id = ?;";
+              db.query(sql, [idMusica], (error, results) => {
+                if (error) {
+                  console.error(error);
+                  res.status(500).send("Erro ao excluir música.");
+                  return;
+                }
+
+                res.status(200).send(`Música com ID ${idMusica} e artista com ID ${artistaId} excluídos com sucesso.`);
+              });
+            });
+          });
+        }
+
+        // Se o artista estiver relacionado a mais de uma música, exclua apenas a música
+        else {
+          sql = "DELETE FROM favorito_artista WHERE favorito_id = ?;";
+          db.query(sql, [idMusica], (error, results) => {
+            if (error) {
+              console.error(error);
+              res.status(500).send("Erro ao excluir música.");
+              return;
+            }
+
+            sql = "DELETE FROM favorito WHERE id = ?;";
+            db.query(sql, [idMusica], (error, results) => {
+            if (error) {
+              console.error(error);
+              res.status(500).send("Erro ao excluir música.");
+              return;
+            }
+
+
+            });
+
+            res.status(200).send(`Música com ID ${idMusica} excluída com sucesso.`);
+          });
+        }
+      });
+    }
+
+    // Se não houver um artista relacionado à música, exclua apenas a música
+    else {
+      let sql = "DELETE FROM favorito_artista WHERE favorito_id = ?;";
+      db.query(sql, [idMusica], (error, results) => {
+        if (error) {
+          console.error(error);
+          res.status(500).send("Erro ao excluir música.");
+          return;
+        }
+
+        sql = "DELETE FROM favorito WHERE id = ?;";
+        db.query(sql, [idMusica], (error, results) => {
+        if (error) {
+          console.error(error);
+          res.status(500).send("Erro ao excluir música.");
+          return;
+        }
+
+        
+        });
+
+        res.status(200).send(`Música com ID ${idMusica} excluída com sucesso.`);
+      });
+    }
+  });
+});
+
+// Verificar lista de favoritos
+server.get("/verificar-favorito/:id", (req, res) => {
+  let idMusica = req.params.id;
+
+  let verificar = "SELECT COUNT(*) AS quantidade " +
+  "FROM favorito WHERE id = ?;";
+
+  db.query(verificar, [idMusica], (error, resultados) => {
+    if (error) {
+      console.log("Erro ao verificar favorito!");
+      res.status(500).send("Erro ao verificar favorito!");
+      return;
+    } else {
+      const quantidade = resultados[0].quantidade;
+      const estaNosFavoritos = quantidade > 0;
+      res.send({ status: true, data: estaNosFavoritos });
+      console.log("Verificação executada com sucesso!");
+    }
+  });
+
 });

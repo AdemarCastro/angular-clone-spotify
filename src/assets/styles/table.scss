@@ -58,6 +58,11 @@ table {
             font-size: .85rem;
             color: $preto-transparente-70;
 
+            #favorito {
+                color:red;
+                font-size: .9rem;
+            }
+
             &:nth-child(1) {
                 padding-left: 10px;
             }

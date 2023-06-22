@@ -10,5 +10,6 @@ export interface IMusica {
         nome: string,
         imagemUrl: string,
     },
-    tempo?: string
+    tempo?: string,
+    estaNosFavoritos?: boolean;
 }

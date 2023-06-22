@@ -23,7 +23,8 @@ export function newMusica(): IMusica {
         },
         artistas: [],
         tempo: '',
-        titulo: ''
+        titulo: '',
+        estaNosFavoritos: false
     }
 }
 
