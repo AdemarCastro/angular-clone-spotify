@@ -3,10 +3,10 @@
         Seu Top Artista
     </span>
 
-    <app-top-artista class="mt-2 d-block"></app-top-artista> 
+    <app-top-artista class="mt-2 d-block"></app-top-artista>
 
     <span class="titulo-bg mt-4">
-        Musicas Curtidas
+        Mais Ouvidas
     </span>
 
     <table class="table mt-3">
@@ -21,21 +21,23 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let musica of musicas" (click)="executarMusica(musica)" [class.executando]="musica.id === musicaAtual.id">
-                <td (click)="executarMusica(musica)">
+            <tr *ngFor="let musica of musicas" (click)="executarMusica(musica)"
+                [class.executando]="musica.id === musicaAtual.id">
+                <td>
                     <fa-icon class="play" [icon]="playIcone"></fa-icon>
                 </td>
-                <td (click)="executarMusica(musica)">
+                <td>
                     {{ musica.titulo }}
                 </td>
-                <td (click)="executarMusica(musica)">
+                <td>
                     {{ obterArtistas(musica) }}
                 </td>
-                <td (click)="executarMusica(musica)">
+                <td>
                     {{ musica.album.nome }}
                 </td>
                 <td class="direita">{{ musica.tempo }}</td>
-                <td class="heart" (click)="musica.estaNosFavoritos ? removerFavorito(musica) : adicionarFavorito(musica); $event.stopPropagation()">
+                <td class="heart"
+                    (click)="musica.estaNosFavoritos ? removerFavorito(musica) : adicionarFavorito(musica); $event.stopPropagation()">
                     <fa-icon [icon]="heartIcone" [ngClass]="{'coracao-preenchido': musica.estaNosFavoritos}"></fa-icon>
                 </td>
             </tr>

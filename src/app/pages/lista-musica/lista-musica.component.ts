@@ -1,7 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { faHeart, faPlay } from '@fortawesome/free-solid-svg-icons';
-import { Subscribable, Subscription } from 'rxjs';
+import { Observer, Subscribable, Subscription, firstValueFrom } from 'rxjs';
 import { newMusica } from 'src/app/Common/factories';
 import { IAlbum } from 'src/app/interfaces/IAlbum';
 import { IArtista } from 'src/app/interfaces/IArtista';
@@ -41,25 +42,17 @@ export class ListaMusicaComponent implements OnInit, OnDestroy{
     private activedRoute: ActivatedRoute,
     private spotifyService: SpotifyService,
     private playerService: PlayerService,
-    private bancoService: BancoService
+    private bancoService: BancoService,
+    private http: HttpClient
     ) {  }
 
-  ngOnInit(): void {
-    this.obterMusicas();
+  async ngOnInit(): Promise<void> {
+    await this.obterMusicas();
     this.obterMusicaAtual();
-    this.teste();
   }
 
   ngOnDestroy(): void {
     this.subs.forEach(sub => sub.unsubscribe());
-  }
-
-  teste() {
-    this.bancoService.getMusicasFavoritas().subscribe((resultData: any) => {
-      this.isResultLoaded = true;
-      console.log(resultData.data);
-      this.FavoritosArray = resultData.data;
-    })
   }
 
   obterMusicaAtual() {
@@ -145,6 +138,7 @@ export class ListaMusicaComponent implements OnInit, OnDestroy{
     this.bannerImagemUrl = bannerImage;
     this.bannerTexto = bannerTexto;
     this.musicas = musicas;
+    this.musicas.forEach(musica => this.verificarFavoritos(musica));
   }
 
   async executarMusica(musica: IMusica) {
@@ -166,5 +160,72 @@ export class ListaMusicaComponent implements OnInit, OnDestroy{
     }
 
     return album;
+  }
+
+  adicionarFavorito(musica: IMusica) {
+
+    let artistasData = musica.artistas.map((artista) => {
+      return {
+        "id": artista.id,
+        "nome": artista.nome
+      };
+    });
+
+    let bodyData = {
+      "id" : musica.id,
+      "titulo" : musica.titulo,
+      "tempo" : musica.tempo,
+      "album_id" : musica.album.id,
+      "album_imagemUrl" : musica.album.imagemUrl,
+      "album_nome" : musica.album.nome,
+      "artistas" : artistasData
+    };
+
+    this.http.post("http://localhost:8080/favoritos/add", bodyData).subscribe((resultData : any) => {
+      try {
+        console.log(resultData);
+        musica.estaNosFavoritos = true;
+      } catch {
+        console.log(resultData);
+      }
+    });
+  }
+
+  async verificarFavoritos(musica: IMusica){
+    try {
+      const response$ = await this.obterDadosDoBanco(musica);
+      const estaNosFavoritos = response$.data;
+      musica.estaNosFavoritos = estaNosFavoritos;
+      console.log(`A música ${musica.titulo} ${estaNosFavoritos ? 'está' : 'não está'} nos favoritos.`);
+    } catch (error) {
+      console.log(`Erro ao verificar favorito da ${musica.titulo}!`);
+    }
+  }
+
+  async obterDadosDoBanco(musica: IMusica): Promise<any> {
+    const id = musica.id;
+    const response$ = this.bancoService.getVerificarMusica(id);
+    const response = await firstValueFrom(response$);
+    return response; // retorna o valor booleano da propriedade `data`
+  }
+
+  removerFavorito(musica: IMusica) {
+    const observer: Observer<any> = {
+      next: response => {
+        console.log(response); // Exibe a resposta completa da API
+        console.log(`Música com ID ${musica.id} excluída com sucesso: ${response.body}`);
+        musica.estaNosFavoritos = false;
+        location.reload(); // Recarrega a página ao clicar em excluir
+      },
+      error: error => {
+        console.log(error);
+        console.error(`Erro ao excluir a música ${musica.titulo}.`);
+      },
+      complete: () => {
+        console.log('Operação de exclusão concluída!');
+      },
+    };
+  
+    this.bancoService.deleteMusica(musica.id).subscribe(observer);
   }
 }

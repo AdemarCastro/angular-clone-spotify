@@ -35,7 +35,9 @@
                 <td>{{ obterArtistas(musica) }}</td>
                 <td>{{ obterAlbum(musica) }}</td>
                 <td class="direita">{{ musica.tempo }}</td>
-                <fa-icon [icon]="heartIcone" [ngClass]="{'coracao-preenchido': musica.estaNosFavoritos}"></fa-icon>
+                <td class="heart" (click)="musica.estaNosFavoritos ? removerFavorito(musica) : adicionarFavorito(musica); $event.stopPropagation()">
+                    <fa-icon [icon]="heartIcone" [ngClass]="{'coracao-preenchido': musica.estaNosFavoritos}"></fa-icon>
+                </td>
             </tr>
         </tbody>
     </table>
