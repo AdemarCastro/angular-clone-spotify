@@ -1,16 +1,13 @@
 import { Injectable } from '@angular/core';
 import { SpotifyConfiguration } from 'src/environments/environment';
-import { SpotifyProdConfiguration } from 'src/environments/environment.prod';
 import Spotify from 'spotify-web-api-js';
 import { IUsuario } from '../interfaces/IUsuario';
 import { SpotifyAlbumParaAlbum, SpotifyArtistaParaArtista, SpotifyObjectAlbumParaAlbum, SpotifyPlaylistParaPlaylist, SpotifySingleAlbumParaAlbum, SpotifySingleArtistaParaArtista, SpotifySinglePlaylistParaPlaylist, SpotifyTrackFullParaMusica, SpotifyTrackSimplifiedParaMusica, SpotifyUserParaUsuario } from '../Common/spotifyHelper';
-import jwt_decode, {JwtPayload } from 'jwt-decode';
 import { IPlaylist } from '../interfaces/IPlaylist';
 import { Router } from '@angular/router';
 import { IArtista } from '../interfaces/IArtista';
 import { IMusica } from '../interfaces/IMusica';
 import { IAlbum } from '../interfaces/IAlbum';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -53,7 +50,7 @@ export class SpotifyService {
   obterUrlLogin() {
     const authEndpoint = `${SpotifyConfiguration.authEndpoint}?`;
     const clientId = `client_id=${SpotifyConfiguration.clientId}&`;
-    const redirectUrl = `redirect_uri=${SpotifyProdConfiguration.redirectUrl}&`;
+    const redirectUrl = `redirect_uri=${SpotifyConfiguration.redirectUrl}&`;
     const scopes = `scope=${SpotifyConfiguration.scopes.join('%20')}&`;
     const responseType = `response_type=token&show_dialog=true`;
     return authEndpoint + clientId + redirectUrl + scopes + responseType;
