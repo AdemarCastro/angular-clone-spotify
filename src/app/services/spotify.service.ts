@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SpotifyConfiguration } from 'src/environments/environment';
-import { SpotifuConfiguration } from 'src/environments/environment.prod';
+import { SpotifyProdConfiguration } from 'src/environments/environment.prod';
 import Spotify from 'spotify-web-api-js';
 import { IUsuario } from '../interfaces/IUsuario';
 import { SpotifyAlbumParaAlbum, SpotifyArtistaParaArtista, SpotifyObjectAlbumParaAlbum, SpotifyPlaylistParaPlaylist, SpotifySingleAlbumParaAlbum, SpotifySingleArtistaParaArtista, SpotifySinglePlaylistParaPlaylist, SpotifyTrackFullParaMusica, SpotifyTrackSimplifiedParaMusica, SpotifyUserParaUsuario } from '../Common/spotifyHelper';
@@ -53,7 +53,7 @@ export class SpotifyService {
   obterUrlLogin() {
     const authEndpoint = `${SpotifyConfiguration.authEndpoint}?`;
     const clientId = `client_id=${SpotifyConfiguration.clientId}&`;
-    const redirectUrl = `redirect_uri=${SpotifuConfiguration.redirectUrl}&`;
+    const redirectUrl = `redirect_uri=${SpotifyProdConfiguration.redirectUrl}&`;
     const scopes = `scope=${SpotifyConfiguration.scopes.join('%20')}&`;
     const responseType = `response_type=token&show_dialog=true`;
     return authEndpoint + clientId + redirectUrl + scopes + responseType;

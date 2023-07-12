@@ -1,8 +1,8 @@
-export const environment = { // Basicamente as variáveis de ambiente do Angular. No momento da Compilação se eu não passar nada, ele vai utilizar o "environment.ts", mas eu posso passar um parâmetro para utilizar o "environment.prod.ts" 
+export const environment = { // Basicamente as variáveis de ambiente do Angular. No momento da Compilação se eu não passar nada, ele vai utilizar o "environment.ts", mas eu posso passar um parâmetro para utilizar o "environment.prod.ts"
     production: false
 };
 
-export const SpotifuConfiguration = {
+export const SpotifyProdConfiguration = {
     clientId: '38b024853fb046218e8bee9ae7eafd27', // Id da minha Aplicação do Spotify
     authEndpoint: 'https://accounts.spotify.com/authorize', // EndPoint que o Spotify usa para autenticar o usuário
     redirectUrl: 'http://localhost:4200/login/', // Para onde o usuário será redirecionado após o processo de autenticação ser concluído
