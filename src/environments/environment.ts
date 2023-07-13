@@ -5,7 +5,7 @@ export const environment = { // Basicamente as variáveis de ambiente do Angular
 export const SpotifyConfiguration = {
     clientId: 'c25ea3a3c97749ed9658853396552cce', // Id da minha Aplicação do Spotify
     authEndpoint: 'https://accounts.spotify.com/authorize', // EndPoint que o Spotify usa para autenticar o usuário
-    redirectUrl: 'https://angular-clone-spotify.vercel.app/login/', // Para onde o usuário será redirecionado após o processo de autenticação ser concluído
+    redirectUrl: 'http://localhost:4200/login/', // Para onde o usuário será redirecionado após o processo de autenticação ser concluído
     scopes: [
         "user-read-currently-playing", // Musica tocando agora
         "user-read-recently-played", // Ler músicas tocadas recentemente
