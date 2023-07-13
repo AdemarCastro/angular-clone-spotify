@@ -10,12 +10,16 @@ server.use(bodyparser.json());
 // Habilitar o acesso CORS para a aplicação
 server.use(
   cors({
-    origin: process.env.ORIGIN,
+    origin: "http://localhost:4200",
   })
 );
 
 // Parte de conexão com o Banco de Dados
 const db = mysql.createConnection({
+  /* host: process.env.DB_HOST,
+  user: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DBNAME */
   host: process.env.DB_HOST,
   user: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
