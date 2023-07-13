@@ -1,4 +1,5 @@
 // Importando pacotes
+require('dotenv').config()
 const express = require("express");
 const cors = require("cors");
 const bodyparser = require("body-parser");
@@ -9,16 +10,16 @@ server.use(bodyparser.json());
 // Habilitar o acesso CORS para a aplicação
 server.use(
   cors({
-    origin: "http://localhost:4200",
+    origin: process.env.ORIGIN,
   })
 );
 
 // Parte de conexão com o Banco de Dados
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "root",
-  database: "dbspotify"
+  host: process.env.DB_HOST,
+  user: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DBNAME
 });
 
 db.connect(function (error) {
