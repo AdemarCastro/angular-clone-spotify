@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { IArtista } from '../interfaces/IArtista';
 import { IMusica } from '../interfaces/IMusica';
 import { IAlbum } from '../interfaces/IAlbum';
+import SpotifyWebApi from 'spotify-web-api-js';
 
 @Injectable({
   providedIn: 'root'
