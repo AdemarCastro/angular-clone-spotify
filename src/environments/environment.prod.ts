@@ -1,5 +1,5 @@
 export const environment = { // Basicamente as variáveis de ambiente do Angular. No momento da Compilação se eu não passar nada, ele vai utilizar o "environment.ts", mas eu posso passar um parâmetro para utilizar o "environment.prod.ts"
-    production: true
+    production: false
 };
 
 export const SpotifyConfiguration = {
